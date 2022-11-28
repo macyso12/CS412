@@ -1,0 +1,18 @@
+.weather-search {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 40%;
+    margin: 10px auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.weather-search button {
+  font-size: 14px;
+  font-family: inherit;
+  background-color: #3498db;
+  box-shadow: 1px 1px 1px #95a5a6;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  color: white;
+}
