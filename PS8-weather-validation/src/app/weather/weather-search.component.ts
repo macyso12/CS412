@@ -6,7 +6,7 @@ import { WeatherItem } from './weatherInterface';
 import { WEATHER_ITEMS } from '../init-weather';
 import { Subject } from 'rxjs/Subject';
 //importing validators to validate form inputs
-import { Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-weather-search',
@@ -14,7 +14,13 @@ import { Validators } from '@angular/forms';
     <section class="weather-search">
       <form [formGroup]="locationGroup" novalidate>
           <label for="city">City</label>
-          <input #location formControlName="location" type="text" id="city" name="city" (input)="onSearchLocation($event, location.value)" [required]="true" />
+          <input #location formControlName="location" type="text" id="city" name="city" (input)="onSearchLocation($event, location.value)" [required]="true" 
+          [ngClass]="{
+            'is-invalid':
+            locationGroup.get('location')!.touched &&
+            locationGroup.get('location')!.invalid
+          }" formControlName="location"/>
+            <span class="invalid-feedback">Location can't be blank.</span>
           <button type="submit" (click)="onSubmit(e, locationGroup)" [disabled]="locationGroup.invalid">Add City</button>
           <button type="button" (click)="clearWeatherData()">Clear</button>
       </form>
@@ -34,9 +40,24 @@ export class WeatherSearchComponent implements OnInit {
   private searchStream = new Subject<string>();
   data: any = {};
 
+  constructor(
+    private builder: FormBuilder,
+  ) { }
+
   locationGroup = new FormGroup({
     location: new FormControl()
   })
+
+  buildForm() {
+    this.locationGroup = this.builder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  ngOnInit(): void {
+    this.buildForm();
+  }
 
   // adding validators
   profileForm = this.locationGroup.group({
