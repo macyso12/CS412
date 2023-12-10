@@ -47,7 +47,8 @@ export class WeatherSearchComponent implements OnInit {
   locationGroup = new FormGroup({
     location: new FormControl()
   })
-
+  
+  // adding validators
   buildForm() {
     this.locationGroup = this.builder.group({
       username: ['', Validators.required],
@@ -59,7 +60,6 @@ export class WeatherSearchComponent implements OnInit {
     this.buildForm();
   }
 
-  // adding validators
   profileForm = this.locationGroup.group({
     City: ['', Validators.required],
   });
